@@ -30,7 +30,7 @@ stack = []; % stack container
 visited = zeros(gridX + 1, gridY + 1); % visited container
 pred = zeros(gridX + 1, gridY + 1, 2); % predecessor container
 
-% Storing first node in queue and marking as visited
+% Storing first node in stack and marking as visited
 stack(end+1,:) = startNode + 1;
 visited(startNode(1) + 1, startNode(2) + 1) = 1;
 
