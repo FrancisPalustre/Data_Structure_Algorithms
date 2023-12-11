@@ -43,7 +43,6 @@ while ~isempty(queue)
     % Check if endNode and currNode are the same
     if isequal(currNode, endNodes + 1)
         pathFound = true;
-        break;
     end
 
     % Exploring adjNodes
