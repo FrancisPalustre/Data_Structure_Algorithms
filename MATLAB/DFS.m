@@ -34,10 +34,19 @@ pred = zeros(gridX + 1, gridY + 1, 2); % predecessor container
 stack(end+1,:) = startNode + 1;
 visited(startNode(1) + 1, startNode(2) + 1) = 1;
 
-% DFS algorithm
+% DFS containers
+stack = []; % stack container
+visited = zeros(gridX + 1, gridY + 1); % visited container
+pred = zeros(gridX + 1, gridY + 1, 2); % predecessor container
+
+% Storing first node in stack and marking as visited
+stack(end+1,:) = startNode + 1;
+visited(startNode(1) + 1, startNode(2) + 1) = 1;
+
+% DFS algorithm (iterative)
 pathFound = false;
 while ~isempty(stack)
-    currNode = stack(end, :); % getting first node from stack
+    currNode = stack(end, :); % getting last node from stack
     stack(end, :) = []; % remove from stack
 
     % Check if endNode and currNode are the same
@@ -46,19 +55,18 @@ while ~isempty(stack)
         break;
     end
 
-    % Exploring adjacent nodes
+    % Exploring adjNodes
     adjNodes = [1, 0; -1, 0; 0, 1; 0, -1]; % up, down, left, right
     for i = 1:4
-        newPos = currNode + adjNodes(i, :);
+        newPos = currNode + adjNodes(i,:);
         % Check whether node is obstacle or visited
         if newPos(1) >= 1 && newPos(1) <= gridX + 1 && newPos(2) >= 1 && newPos(2) <= gridY + 1 && ...
-           grid(newPos(1), newPos(2)) ~= -1 && visited(newPos(1), newPos(2)) == 0 
-            % top line checks if within grid bounds, bottom checks if it is
-            % obstacles
+           grid(newPos(1), newPos(2)) ~= -1 && visited(newPos(1), newPos(2)) == 0
+            % top line checks if within grid bounds, bottom checks if it is obstacles
 
-            stack(end + 1, :) = newPos; % store into the stack
+            stack(end + 1, :) = newPos; % push onto the stack
             visited(newPos(1), newPos(2)) = 1; % mark as visited
-            pred(newPos(1), newPos(2), :) = currNode; % store in predecessor in container
+            pred(newPos(1), newPos(2), :) = currNode; % store in predecessor container
         end
     end
 end
@@ -67,7 +75,6 @@ end
 path = [];
 if pathFound
     currNode = endNodes + 1;
-
     while ~isequal(currNode, startNode + 1)
         path = [currNode - 1; path];
         currNode = squeeze(pred(currNode(1), currNode(2), :))';
