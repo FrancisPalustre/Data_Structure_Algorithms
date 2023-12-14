@@ -57,7 +57,7 @@ unordered_map<string, vector<string>> removeEdges(unordered_map<string, vector<s
     return graph;
 }
 
-void roboMove(unordered_map<string, vector<string>> newGraph, string startNode, string desiredNode) {
+void path(unordered_map<string, vector<string>> graph, string startNode, string desiredNode) {
     vector<string> carPath = BFS(newGraph, startNode, desiredNode);
 
     //Couts the generated path
@@ -114,9 +114,9 @@ int main()  {
         }
 
 	//Resultant graph after changes
-        unordered_map <string, vector<string>> newGraph = removeEdges(graph, removeVec);
+        graph = removeEdges(graph, removeVec);
 
-        roboMove(newGraph, startingNode, desiredNode);
+        path(graph, startingNode, desiredNode);
 		
     return 0;
 }
