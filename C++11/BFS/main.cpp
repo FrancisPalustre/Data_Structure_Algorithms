@@ -8,9 +8,9 @@
 
 using namespace std;
 
-vector<string> BFS_shortPath(unordered_map<string, vector<string>> newGraph, string startingNode, string desiredNode) {
+vector<string> BFS(unordered_map<string, vector<string>> newGraph, string startingNode, string desiredNode) {
     //Creating containers of visited and queued values
-	vector<string> visited;
+    vector<string> visited;
     queue<vector<string>> queue;
 
     queue.push({startingNode}); //starting the queue with our starting node
@@ -21,7 +21,7 @@ vector<string> BFS_shortPath(unordered_map<string, vector<string>> newGraph, str
 
         string currNode = path.back();//tailed node becomes current node
 
-		//iteratoes through a set to find the current vakue in the path
+	//iteratoes through a set to find the current vakue in the path
         vector<string>::iterator findCurr = find(visited.begin(), visited.end(), currNode);
 
         if (findCurr == visited.end()) {
@@ -29,8 +29,8 @@ vector<string> BFS_shortPath(unordered_map<string, vector<string>> newGraph, str
 
             vector<string> adjNodes = newGraph[currNode]; //nearby nodes of current
             
-			for (const string& neighbor : adjNodes) {//iterates the adjNodes
-                vector<string> newPath = path;
+	    for (const string& neighbor : adjNodes) {//iterates the adjNodes
+        	vector<string> newPath = path;
                 newPath.push_back(neighbor); //add neighbor to newPath vector
                 queue.push(newPath); //adds resultant path to queue
 
@@ -47,8 +47,8 @@ unordered_map<string, vector<string>> removeEdges(unordered_map<string, vector<s
     for (const string& edges : removeVec) {//for every edges of the current node...
         for (const string& adjNodes : graph[edges]) {//for every node of those edges...
 			
-			//disconnects the connected nodes from current edge
-			vector<string>::iterator removeNode = remove(graph[adjNodes].begin(), graph[adjNodes].end(), edges);
+		//disconnects the connected nodes from current edge
+		vector<string>::iterator removeNode = remove(graph[adjNodes].begin(), graph[adjNodes].end(), edges);
 
             graph[adjNodes].erase(removeNode, graph[adjNodes].end()); //getting rid of edges
         }
@@ -58,45 +58,15 @@ unordered_map<string, vector<string>> removeEdges(unordered_map<string, vector<s
 }
 
 void roboMove(unordered_map<string, vector<string>> newGraph, string startNode, string desiredNode) {
-    vector<string> carPath = BFS_shortPath(newGraph, startNode, desiredNode);
+    vector<string> carPath = BFS(newGraph, startNode, desiredNode);
 
-	//Couts the generated path
-	for (const string& node : carPath) {
-    	cout << node << " "; 
-	} cout << endl;
-
-	//Movement based on position rather velocity
-    for (int i =0; i < carPath.size()-1; i++) {
-		//Position is based on current and next value in path
-		int currPos = stoi(carPath.at(i));
-        int nextPos = stoi(carPath.at(i+1));
-
-		//algebra is based on how graph is setup
-        if ((currPos + 4) == nextPos) {
-            cout << "up" << endl;
-			// direction(0,0.6604); //26inches converted to meters
-        }
-
-        if ((currPos - 4) == nextPos) {
-            cout << "down" << endl;
-			// direction(0,-0.6604);
-        }
-
-        if ((currPos + 1) == nextPos) {
-            cout << "right" << endl;
-			// direction(0.6604,0);
-        }
-
-        if ((currPos - 1) == nextPos) {
-            cout << "left" << endl;
-			// direction(-0.6604,0);
-        }
-    }
+    //Couts the generated path
+    for (const string& node : carPath) {
+        cout << node << " "; 
+    } cout << endl;
 }
 
 int main()  {	
-
-
     unordered_map <string, vector <string>> graph = {
             {"1", {"2","5"}},
 			{"2", {"3","6","1"}},
@@ -116,7 +86,7 @@ int main()  {
 			{"16", {"15","12"}}
       };
 		
-		//Setting parameters for path traversal
+	//Setting parameters for path traversal
         string startingNode =" ";
         string desiredNode = " ";
         
@@ -131,8 +101,8 @@ int main()  {
         cout << "\nHow many nodes to remove: ";
         cin >> nodeRemoval;
     
-		//vector that houses the nodes/edges you
-		//want to remove from graph
+	//vector that houses the nodes/edges you
+	//want to remove from graph
         vector <string> removeVec;
         string input = "";
         
@@ -143,7 +113,7 @@ int main()  {
             removeVec.push_back(input);    
         }
 
-		//Resultant graph after changes
+	//Resultant graph after changes
         unordered_map <string, vector<string>> newGraph = removeEdges(graph, removeVec);
 
         roboMove(newGraph, startingNode, desiredNode);
