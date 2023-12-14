@@ -140,7 +140,7 @@ vector<string> Dijkstra(map<string, map<string, int>> graph, string startNode, s
 }
 
 //Print path and movements for a robot to move from start to desired node
-void roboMove(map<string, map<string, int>> graph, string startNode, string desiredNode) {
+void path(map<string, map<string, int>> graph, string startNode, string desiredNode) {
 	vector<string> roboPath =  Dijkstra(graph, startNode, desiredNode);
 
 	//couts path
@@ -203,7 +203,7 @@ int main() {
 	//resultant graph with the new weighted values
 	graph = randWeights(graph);
 
-	roboMove(graph, startingNode, desiredNode);
+	path(graph, startingNode, desiredNode);
 
     return 0;
 }
