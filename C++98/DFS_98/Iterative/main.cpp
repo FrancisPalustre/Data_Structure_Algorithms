@@ -184,7 +184,7 @@ map<string, vector<string> > removeEdges(map<string, vector<string> > graph, vec
 }
 
 //Print the path and movements for a robot to move from start to desired node
-void roboMove(map<string, vector<string> > newGraph, string startNode, string desiredNode) {
+void path(map<string, vector<string> > newGraph, string startNode, string desiredNode) {
     vector<string> carPath = DFS(newGraph, startNode, desiredNode);
 
     //Couts the final path
@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
     //Resultant graph after changes
     graph = removeEdges(graph, removeVec);
 
-    roboMove(graph, startingNode, desiredNode);
+    path(graph, startingNode, desiredNode);
 
     return 0;
 }
